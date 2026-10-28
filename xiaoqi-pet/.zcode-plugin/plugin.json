@@ -1,0 +1,11 @@
+{
+  "name": "xiaoqi-pet",
+  "version": "0.3.0",
+  "description": "Xiaoqi desk pet: a native macOS companion plus a cross-platform (Windows/Linux/macOS) Electron companion that mirror live ZCode session activity (phases, tools, waiting states) via plugin hooks, with a multi-session task board, drawers, usage/balance capsule on the pet belly and notices.",
+  "author": {
+    "name": "fengxiaohui"
+  },
+  "hooks": "./hooks/hooks.json",
+  "skills": "./skills",
+  "commands": "./commands"
+}

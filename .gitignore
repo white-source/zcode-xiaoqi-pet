@@ -1,0 +1,4 @@
+.DS_Store
+xiaoqi-pet/desktop/dist/
+xiaoqi-pet/desktop/electron/node_modules/
+xiaoqi-pet/desktop/electron/dist/

@@ -1,0 +1,23 @@
+{
+  "name": "zcode-xiaoqi-pet",
+  "plugins": [
+    {
+      "name": "xiaoqi-pet",
+      "source": {
+        "source": "github",
+        "repo": "white-source/zcode-xiaoqi-pet",
+        "path": "xiaoqi-pet"
+      },
+      "version": "0.3.0",
+      "description": "Xiaoqi desk pet: a native macOS companion plus a cross-platform (Windows/Linux/macOS) Electron companion that mirror live ZCode session activity (phases, tools, waiting states) via plugin hooks, with a multi-session task board, drawers, usage/balance capsule on the pet belly and notices.",
+      "displayName": "Xiaoqi Desk Pet",
+      "displayName_i18n": {
+        "zh-CN": "小栖桌宠"
+      },
+      "description_i18n": {
+        "zh-CN": "macOS 原生 + Windows/Linux Electron 桌面小栖：实时展示 ZCode 多会话状态，任务看板、抽屉卡、通知、今日用量与套餐余量胶囊，还能让它说话。"
+      },
+      "category": "productivity"
+    }
+  ]
+}
