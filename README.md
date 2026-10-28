@@ -26,7 +26,7 @@ white-source/zcode-xiaoqi-pet
 
 **3. 试用**：跑任意一个 ZCode 会话，一秒内小栖就会醒来；`/pet-say 你好` 可以让它说话。
 
-详细说明见 [xiaoqi-pet/README.zh-CN.md](xiaoqi-pet/README.zh-CN.md)（[English](xiaoqi-pet/README.md)）。
+详细说明见 [xiaoqi-pet/README_CN.md](xiaoqi-pet/README_CN.md)（[English](xiaoqi-pet/README.md)）。
 
 ## 本地开发
 

@@ -1,6 +1,6 @@
 {
   "name": "xiaoqi-pet-zcode-desktop",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "private": true,
   "description": "Cross-platform Xiaoqi (小栖) desktop companion for Windows, Linux and macOS, fed by the xiaoqi-pet ZCode plugin hooks.",
   "main": "main.js",

@@ -117,6 +117,15 @@ ZCode 的套餐额度接口需要 ZCode 内部加密保存的登录凭据，插�
 
 输出 feed 目录、待处理文件数、应用当前渲染的会话状态、今日 / 近 7 天用量和是否配置了远端余量。`pendingFeedFiles > 0` 说明桌宠没在运行或没在消费。Windows / Linux 看 Electron 控制台输出。
 
+## 副作用、权限与第三方素材
+
+- **hooks 在 7 个事件上起一次短暂进程。** ZCode 执行 `bash "<插件>/hooks/feed-event.sh" <事件>`（没有 bash 时用 `powershell -File …feed-event.ps1`）。每次运行只在状态目录写一个不超过 64 KB 的 JSON 文件、退出码 0、超时上限 5 秒；不阻塞、不改动会话，事件文件留给桌宠消费。
+- **写入的文件：** `<状态目录>/feed/*.json` 与 `<状态目录>/emote/*.json`。状态目录：macOS `~/Library/Application Support/XiaoqiPet/`，Linux `${XDG_CONFIG_HOME:-~/.config}/xiaoqi-pet/`，Windows `%APPDATA%\XiaoqiPet\`。桌宠读取后删除对应事件文件；hook 会清掉超过一天的残留。
+- **网络：** 插件本身不发任何网络请求。桌宠只读本地 ZCode 用量库（`~/.zcode/cli/db/db.sqlite`）显示今日 token；只有用户自己创建可选 `balance.json` 指向其额度接口时才会联网。
+- **凭据：** 不涉及。插件不读取、不保存、不传输 ZCode 的凭据或 API Key。
+- **桌宠本体需单独下载。** 桌宠程序不随插件分发，插件也不会下载或启动它；用户从项目的 GitHub Releases 自行安装。没装桌宠时插件不产生可见行为，也不会报错。
+- **第三方素材：** 小栖形象与界面结构来自 [dsh-xiaoqi-pet](https://github.com/white-source/dsh-xiaoqi-pet)（MIT，© 2026 Xiaoqi Desk Pet contributors）。
+
 ## 兼容性与验证状态
 
 - ZCode Desktop（支持 7 个标准 hook 事件）；macOS 13+（原生）；Windows 10+ / 主流 Linux 发行版（Electron 45）。

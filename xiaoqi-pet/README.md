@@ -117,6 +117,15 @@ The pet scans `feed/` once per second, folds the events into an in-memory per-se
 
 prints the feed directory, pending file count, the sessions the pet would render, today/7-day usage and whether a remote balance is configured. `pendingFeedFiles > 0` means the pet is not running or not consuming. On Windows / Linux check the Electron console output.
 
+## Side effects, permissions and third-party material
+
+- **Hooks run a short-lived process on seven events.** ZCode executes `bash "<plugin>/hooks/feed-event.sh" <Event>` (`powershell -File …feed-event.ps1` when bash is unavailable). Each run writes one JSON file of at most 64 KB under the state directory, exits 0, and is capped at a 5 s timeout. It never blocks or edits the session and leaves the event file for the pet to consume.
+- **Files written:** `<state>/feed/*.json` and `<state>/emote/*.json`. State directory: macOS `~/Library/Application Support/XiaoqiPet/`, Linux `${XDG_CONFIG_HOME:-~/.config}/xiaoqi-pet/`, Windows `%APPDATA%\XiaoqiPet\`. The desktop pet deletes each event file after reading it; the hook sweeps leftovers older than a day.
+- **Network:** the plugin itself makes no network requests. The desktop pet reads ZCode's local usage database (`~/.zcode/cli/db/db.sqlite`) read-only to show today's token count, and only talks to the network if the user creates an optional `balance.json` pointing at their own quota endpoint.
+- **Credentials:** none. The plugin never reads, stores or transmits ZCode credentials or API keys.
+- **Desktop pet is a separate download.** The pet app is not bundled and is not downloaded or launched by the plugin; users install it themselves from the project's GitHub Releases. The plugin remains harmless (no visible behaviour, no errors) if the app is absent.
+- **Third-party material:** pet artwork and UI structure come from [dsh-xiaoqi-pet](https://github.com/white-source/dsh-xiaoqi-pet) (MIT, © 2026 Xiaoqi Desk Pet contributors).
+
 ## Compatibility and verification status
 
 - ZCode Desktop with the 7 standard hook events; macOS 13+ (native); Windows 10+ / common Linux distros (Electron 45).
