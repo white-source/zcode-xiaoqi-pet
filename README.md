@@ -48,13 +48,34 @@ cd xiaoqi-pet/desktop/electron && npm install && npm start
 
 ## 发布
 
-推一个 `v*` tag 会触发 [.github/workflows/release.yml](.github/workflows/release.yml)，在 macOS / Windows / Linux 三个 runner 上分别构建桌宠并创建 GitHub Release：
+插件版本在 `xiaoqi-pet/.zcode-plugin/plugin.json`，市场条目在 `marketplace.json`，Electron 版在 `xiaoqi-pet/desktop/electron/package.json`，三者需保持一致。
+
+1. 本地构建三平台产物：
 
 ```sh
-git tag v0.3.0 && git push origin v0.3.0
+# macOS（Apple Silicon）
+xiaoqi-pet/desktop/build.sh
+ditto -c -k --sequesterRsrc --keepParent \
+  "xiaoqi-pet/desktop/dist/ZCode Xiaoqi Pet.app" \
+  "ZCode-Xiaoqi-Pet-v0.3.0-macos-arm64.zip"
+
+# Windows / Linux（在 macOS 或 Linux 上交叉构建均可）
+cd xiaoqi-pet/desktop/electron && npm install
+npx electron-builder --win zip --x64 --arm64 --publish never
+npx electron-builder --linux AppImage --x64 --publish never
 ```
 
-插件版本在 `xiaoqi-pet/.zcode-plugin/plugin.json`，市场条目在 `marketplace.json`，两者需保持一致。
+2. 建 tag 并上传 Release：
+
+```sh
+gh release create v0.3.0 --target main --title "小栖桌宠 v0.3.0" --notes "…" \
+  "ZCode-Xiaoqi-Pet-v0.3.0-macos-arm64.zip" \
+  "xiaoqi-pet/desktop/electron/dist/ZCode-Xiaoqi-Pet-0.3.0-win-x64.zip" \
+  "xiaoqi-pet/desktop/electron/dist/ZCode-Xiaoqi-Pet-0.3.0-win-arm64.zip" \
+  "xiaoqi-pet/desktop/electron/dist/ZCode-Xiaoqi-Pet-0.3.0-linux-x86_64.AppImage"
+```
+
+3. 更新 `marketplace.json` 与插件 manifest 的版本，让已安装的用户能收到更新。
 
 ## 与 DSH 版共存
 
